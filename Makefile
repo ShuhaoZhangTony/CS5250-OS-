@@ -1,4 +1,4 @@
-TARGET_MODULE:=hello_world_mod
+TARGET_MODULE:=device
 obj-m += $(TARGET_MODULE).o
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
