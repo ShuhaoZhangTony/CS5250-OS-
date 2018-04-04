@@ -28,6 +28,7 @@ struct file_operations onebyte_fops = {
     release: onebyte_release
 };
 char *onebyte_data = NULL;
+const ssize_t message_size = 1;
 int onebyte_open(struct inode *inode, struct file *filep)
 {
     return 0; // always successful
@@ -41,16 +42,12 @@ ssize_t onebyte_read(struct file *filep,
         size_t len, 
         loff_t *f_pos)
 {
-    /*please complete the function on your own*/
-
 }
 ssize_t onebyte_write(struct file *filep, 
         const char *buf,
         size_t count, 
         loff_t *f_pos)
 {
-    /*please complete the function on your own*/
-
 }
 static int onebyte_init(void)
 {
