@@ -48,10 +48,12 @@ return 0; // always successful
 ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos)
 {
 /*please complete the function on your own*/
+	return 0;
 }
 ssize_t onebyte_write(struct file *filep, const char *buf, size_t count, loff_t *f_pos)
 {
 /*please complete the function on your own*/
+	return 0;
 }
 static int onebyte_init(void)
 {
@@ -72,16 +74,16 @@ static int onebyte_init(void)
     // allocate one byte of memory for storage
     // kmalloc is just like malloc, the second parameter is// the type of memory to be allocated.
     // To release the memory allocated by kmalloc, use kfree.
-//    onebyte_data = kmalloc(sizeof(char), GFP_KERNEL);
-//    if (!onebyte_data) {
-//        onebyte_exit();
-//        // cannot allocate memory
-//        // return no memory error, negative signify a failure
-//        return -ENOMEM;
-//    }
+    onebyte_data = kmalloc(sizeof(char), GFP_KERNEL);
+    if (!onebyte_data) {
+        onebyte_exit();
+        // cannot allocate memory
+        // return no memory error, negative signify a failure
+        return -ENOMEM;
+    }
 //    // initialize the value to be X
-//    *onebyte_data = 'X';
-//    printk(KERN_ALERT "This is a onebyte device module.\n");
+    *onebyte_data = 'X';
+    printk(KERN_ALERT "This is a onebyte device module.\n");
     return 0;
 }
 static void onebyte_exit(void)
@@ -93,7 +95,7 @@ static void onebyte_exit(void)
         onebyte_data = NULL;
     }
     // unregister the device
-    unregister_chrdev(MAJOR_NUMBER, "onebyte");
+    unregister_chrdev(MAJOR_NUMBER, DEVICE_NAME);
     printk(KERN_ALERT "Onebyte device module is unloaded\n");
 }
 MODULE_LICENSE("GPL");
