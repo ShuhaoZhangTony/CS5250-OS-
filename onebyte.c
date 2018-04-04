@@ -7,12 +7,18 @@
 #include <linux/fs.h>
 #include <linux/proc_fs.h>
 #include <asm/uaccess.h>
-#define MAJOR_NUMBER 61
-/* forward declaration */
+#define MAJOR_NUMBER 61/* forward declaration */
+
 int onebyte_open(struct inode *inode, struct file *filep);
 int onebyte_release(struct inode *inode, struct file *filep);
-ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos);
-ssize_t onebyte_write(struct file *filep, const char *buf, size_t count, loff_t *f_pos);
+ssize_t onebyte_read(struct file *filep, 
+        char *buf, size_t count, 
+        loff_t *f_pos);
+
+ssize_t onebyte_write(struct file *filep, 
+        const char *buf, size_t count, 
+        loff_t *f_pos);
+
 static void onebyte_exit(void);
 /* definition of file_operation structure */
 struct file_operations onebyte_fops = {
@@ -30,13 +36,21 @@ int onebyte_release(struct inode *inode, struct file *filep)
 {
     return 0; // always successful
 }
-ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos)
+ssize_t onebyte_read(struct file *filep, 
+        char *buf, 
+        size_t len, 
+        loff_t *f_pos)
 {
     /*please complete the function on your own*/
+
 }
-ssize_t onebyte_write(struct file *filep, const char *buf, size_t count, loff_t *f_pos)
+ssize_t onebyte_write(struct file *filep, 
+        const char *buf,
+        size_t count, 
+        loff_t *f_pos)
 {
     /*please complete the function on your own*/
+
 }
 static int onebyte_init(void)
 {
@@ -47,8 +61,7 @@ static int onebyte_init(void)
         return result;
     }
     // allocate one byte of memory for storage
-    // kmalloc is just like malloc, the second parameter is
-    // the type of memory to be allocated.
+    // kmalloc is just like malloc, the second parameter is// the type of memory to be allocated.
     // To release the memory allocated by kmalloc, use kfree.
     onebyte_data = kmalloc(sizeof(char), GFP_KERNEL);
     if (!onebyte_data) {
@@ -59,18 +72,18 @@ static int onebyte_init(void)
     }
     // initialize the value to be X
     *onebyte_data = 'X';
-    printk(KERN_ALERT "This is a onebyte device module\n");
+    printk(KERN_ALERT "This is a onebyte device module.\n");
     return 0;
 }
 static void onebyte_exit(void)
 {
-// if the pointer is pointing to something
+    // if the pointer is pointing to something
     if (onebyte_data) {
         // free the memory and assign the pointer to NULL
         kfree(onebyte_data);
         onebyte_data = NULL;
     }
-// unregister the device
+    // unregister the device
     unregister_chrdev(MAJOR_NUMBER, "onebyte");
     printk(KERN_ALERT "Onebyte device module is unloaded\n");
 }
