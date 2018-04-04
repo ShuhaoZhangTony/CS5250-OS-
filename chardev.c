@@ -32,9 +32,14 @@ struct file_operations onebyte_fops = {
 };
 char *onebyte_data = NULL;
 
+
+/* 
+ * Called when a process tries to open the device file, like
+ * "cat /dev/mycharfile"
+ */
 int onebyte_open(struct inode *inode, struct file *filep)
 {
-return 0; // always successful
+    return 0; // always successful
 }
 int onebyte_release(struct inode *inode, struct file *filep)
 {
@@ -67,16 +72,16 @@ static int onebyte_init(void)
     // allocate one byte of memory for storage
     // kmalloc is just like malloc, the second parameter is// the type of memory to be allocated.
     // To release the memory allocated by kmalloc, use kfree.
-    onebyte_data = kmalloc(sizeof(char), GFP_KERNEL);
-    if (!onebyte_data) {
-        onebyte_exit();
-        // cannot allocate memory
-        // return no memory error, negative signify a failure
-        return -ENOMEM;
-    }
-    // initialize the value to be X
-    *onebyte_data = 'X';
-    printk(KERN_ALERT "This is a onebyte device module.\n");
+//    onebyte_data = kmalloc(sizeof(char), GFP_KERNEL);
+//    if (!onebyte_data) {
+//        onebyte_exit();
+//        // cannot allocate memory
+//        // return no memory error, negative signify a failure
+//        return -ENOMEM;
+//    }
+//    // initialize the value to be X
+//    *onebyte_data = 'X';
+//    printk(KERN_ALERT "This is a onebyte device module.\n");
     return 0;
 }
 static void onebyte_exit(void)
