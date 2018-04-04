@@ -5,6 +5,6 @@ all:
 clean:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
 load:
-	insmod ./$(TARGET_MODULE).ko who=$(who)
+	insmod ./$(TARGET_MODULE).ko
 unload:
 	rmmod ./$(TARGET_MODULE).ko	

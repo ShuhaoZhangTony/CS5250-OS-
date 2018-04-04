@@ -46,6 +46,7 @@ result = register_chrdev(MAJOR_NUMBER, "onebyte", &onebyte_fops);
 if (result < 0) {
 return result;
 }
+
 // allocate one byte of memory for storage
 // kmalloc is just like malloc, the second parameter is
 // the type of memory to be allocated.
@@ -62,6 +63,7 @@ return -ENOMEM;
 printk(KERN_ALERT "This is a onebyte device module\n");
 return 0;
 }
+
 static void onebyte_exit(void)
 {
 // if the pointer is pointing to something
