@@ -7,6 +7,7 @@
 #include <linux/fs.h>
 #include <linux/proc_fs.h>
 #include <asm/uaccess.h>
+#include <linux/uaccess.h>
 #define MAJOR_NUMBER 61/* forward declaration */
 
 static int Major;		/* Major number assigned to our device driver */
@@ -32,28 +33,60 @@ struct file_operations onebyte_fops = {
 };
 char *onebyte_data = NULL;
 
-
 /* 
  * Called when a process tries to open the device file, like
  * "cat /dev/mycharfile"
  */
 int onebyte_open(struct inode *inode, struct file *filep)
 {
-    return 0; // always successful
+    	return 0; // always successful
 }
 int onebyte_release(struct inode *inode, struct file *filep)
 {
-return 0; // always successful
+	return 0; // always successful
 }
 ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos)
 {
 /*please complete the function on your own*/
-	return 0;
+	int bytes_read = 0;
+			
+	/* Check if the buffer has been written */
+	if(*buf != 0){
+	   return 0;	
+	}
+	copy_to_user(buf, onebyte_data, sizeof(char));	
+	bytes_read ++;
+	return bytes_read;
 }
 ssize_t onebyte_write(struct file *filep, const char *buf, size_t count, loff_t *f_pos)
 {
 /*please complete the function on your own*/
-	return 0;
+
+/**
+ * copy_from_user: Returns number of bytes that could not be copied. On success, this will be zero.
+ *
+ * to
+ * Destination address, in kernel space.
+ *
+ * from
+ * Source address, in user space.
+ *
+ * n
+ * Number of bytes to copy.
+ */
+	int bytes_write=0;
+	copy_from_user(onebyte_data, buf, sizeof(char));
+
+	/* Check the length of the bytes that cannot be written*/
+	if(count> sizeof(char))
+	{
+		printk(KERN_ALERT "No space left on device\n");
+		/*Return Linux System Error<28>: No space left on device */
+		return -ENOSPC; 
+	}
+	bytes_write++;
+	return bytes_write;
+
 }
 static int onebyte_init(void)
 {

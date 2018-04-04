@@ -1,1 +1,0 @@
-cmd_/home/shuhaozhang/Documents/CS5250-OS-/chardev.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/shuhaozhang/Documents/CS5250-OS-/chardev.ko /home/shuhaozhang/Documents/CS5250-OS-/chardev.o /home/shuhaozhang/Documents/CS5250-OS-/chardev.mod.o ;  true
